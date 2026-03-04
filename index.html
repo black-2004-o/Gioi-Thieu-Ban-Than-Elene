@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elene 🐰 | Giới thiệu bản thân 💗</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: url("https://i.pinimg.com/originals/89/69/dc/8969dc3e963f6cc6d69b5a0db10ceaa2.jpg") no-repeat center center fixed;
+    background-size: cover;
+    color: #4a2c2a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    padding: 15px;
+    overflow-x: hidden;
+  }
+
+  h1 {
+    margin-top: 30px;
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    color: #ff66b3;
+    text-align: center;
+    text-shadow: 1px 1px #ffd6e8;
+    animation: glow 2s infinite alternate;
+  }
+
+  @keyframes glow {
+    from { text-shadow: 0 0 10px #ff99c8; }
+    to { text-shadow: 0 0 20px #ff33cc; }
+  }
+
+  .card {
+    background: rgba(255, 255, 255, 0.88);
+    border-radius: 25px;
+    box-shadow: 0 6px 25px rgba(255, 105, 180, 0.3);
+    padding: 25px;
+    width: 100%;
+    max-width: 420px;
+    text-align: center;
+    backdrop-filter: blur(6px);
+    margin: 20px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .avatar {
+    width: min(120px, 35vw);
+    height: min(120px, 35vw);
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #ff99cc;
+    box-shadow: 0 0 15px #ffb6c1;
+    margin-bottom: 15px;
+  }
+
+  h2 { color: #ff4da6; }
+
+  p {
+    font-size: clamp(0.95rem, 2.5vw, 1rem);
+    line-height: 1.6;
+    margin: 10px 0;
+  }
+
+  .btn {
+    background: linear-gradient(90deg, #ff80b3, #ffb6c1);
+    border: none;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: transform 0.3s;
+    margin-top: 12px;
+  }
+
+  .btn:hover { transform: scale(1.08); }
+
+  #secret {
+    margin-top: 10px;
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
+    color: #ff4da6;
+    display: none;
+    animation: fadeIn 1.2s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 240, 245, 0.95);
+    padding: 25px 35px;
+    border-radius: 25px;
+    box-shadow: 0 0 25px rgba(255, 105, 180, 0.4);
+    text-align: center;
+    color: #ff4da6;
+    font-size: 1.1rem;
+    font-weight: 600;
+    opacity: 0;
+    z-index: 999;
+    transition: opacity 1s ease-in-out;
+    animation: popupFade 4s ease-in-out forwards;
+  }
+
+  @keyframes popupFade {
+    0% { opacity: 0; transform: translate(-50%, -55%); }
+    20% { opacity: 1; transform: translate(-50%, -50%); }
+    80% { opacity: 1; }
+    100% { opacity: 0; transform: translate(-50%, -45%); }
+  }
+
+  .lang-select {
+    position: fixed;
+    top: 10px;
+    right: 15px;
+    display: flex;
+    gap: 10px;
+  }
+
+  .lang-select img {
+    width: 30px;
+    height: 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    border: 1px solid #fff;
+    transition: transform 0.2s;
+  }
+
+  .lang-select img:hover {
+    transform: scale(1.2);
+  }
+</style>
+</head>
+<body>
+
+  <div class="popup" id="popup"></div>
+
+  <div class="lang-select">
+    <img src="https://flagcdn.com/w20/vn.png" onclick="changeLang('vi')" title="Tiếng Việt">
+    <img src="https://flagcdn.com/w20/gb.png" onclick="changeLang('en')" title="English">
+    <img src="https://flagcdn.com/w20/ru.png" onclick="changeLang('ru')" title="Русский">
+    <img src="https://flagcdn.com/w20/cn.png" onclick="changeLang('cn')" title="中文">
+    <img src="https://flagcdn.com/w20/kr.png" onclick="changeLang('ko')" title="한국어">
+    <img src="https://flagcdn.com/w20/de.png" onclick="changeLang('de')" title="Deutsch">
+  </div>
+
+  <h1 id="title"></h1>
+
+  <div class="card">
+    <img src="641897068_893027146975001_8465673286272924902_n.jpg" alt="Elene avatar" class="avatar">
+    <h2 id="name"></h2>
+    <div id="content"></div>
+    <button class="btn" onclick="showSecret()" id="btnText"></button>
+    <div id="secret"></div>
+  </div>
+
+<script>
+const data = {
+  vi: {
+    popup: "💌 Hey, cảm ơn cậu nhaaa 😚<br>Elene vui lắm vì được cậu ghé qua 💕",
+    title: "🐰 Elene – Cô gái yêu màu hồng 💗",
+    name: "🌸 (Elene) 🌸",
+    content: `
+      <p>Xin chào 💕! Mình là <b>Elene 🐰</b>.</p>
+      <p>Mình yêu màu hồng 💗 và thích mang năng lượng tích cực.</p>
+      <p>👜 Mình thích <b>mua sắm</b> và <b>du lịch</b> ✈️.</p>
+      <p> Mình rất thích <b>đi Đức</b> vì nơi đó có nền văn hóa đặc sắc, kiến trúc cổ kính, lâu đài tuyệt đẹp và những con phố rất thơ mộng 💕.</p>
+      <p>🎵 Mình cũng <b>rất thích âm nhạc</b> – âm nhạc giúp mình thư giãn và cảm nhận cuộc sống sâu sắc hơn 💖.</p>
+    `,
+    btn: "Muốn biết bí mật của Elene 🐰?",
+    secret: "💞 Bí mật này Elene giữ kỹ lắm 💖"
+  },
+
+  en: {
+    popup: "💌 Hey there! 😍",
+    title: "🐰 Elene – The girl who loves pink 💗",
+    name: "🌸 (Elene) 🌸",
+    content: `
+      <p>Hello 💕! I'm <b>Elene 🐰</b>.</p>
+      <p>I love pink 💗 and spreading positivity.</p>
+      <p>👜 I love <b>shopping</b> and <b>traveling</b> ✈️.</p>
+      <p> I really love <b>Germany</b> because of its rich culture, historic architecture, beautiful castles, and romantic streets 💕.</p>
+      <p>🎵 I also <b>love music</b> – it helps me relax and feel life more deeply 💖.</p>
+    `,
+    btn: "Wanna know Elene's secret?",
+    secret: "💞 This secret is special 💖"
+  },
+
+  ru: {
+    popup: "💌 Привет 😚",
+    title: "🐰 Банни – Любит розовый 💗",
+    name: "🌸 (Банни) 🌸",
+    content: `
+      <p>Привет 💕! Я <b>Банни 🐰</b>.</p>
+      <p>Я люблю розовый цвет 💗.</p>
+      <p>👜 Люблю <b>шопинг</b> и <b>путешествия</b> ✈️.</p>
+      <p> Я очень люблю <b>Германию</b> за её богатую культуру, красивую архитектуру и сказочные замки 💕.</p>
+      <p>🎵 Я также <b>очень люблю музыку</b> – она помогает мне расслабиться и чувствовать жизнь глубже 💖.</p>
+    `,
+    btn: "Хочешь узнать секрет?",
+    secret: "💞 Это секрет 💖"
+  },
+
+  cn: {
+    popup: "💌 你好 😚",
+    title: "🐰 Elene – 喜爱粉色 💗",
+    name: "🌸 (Elene) 🌸",
+    content: `
+      <p>你好 💕! 我是 <b>Elene 🐰</b>.</p>
+      <p>我喜欢粉红色 💗。</p>
+      <p>👜 我喜欢 <b>购物</b> 和 <b>旅行</b> ✈️。</p>
+      <p> 我很喜欢 <b>德国</b>，因为那里有丰富的文化、古老的建筑和美丽的城堡 💕。</p>
+      <p>🎵 我也 <b>非常喜欢音乐</b> – 音乐让我放松并更深刻地感受生活 💖。</p>
+    `,
+    btn: "想知道秘密吗？",
+    secret: "💞 这是秘密 💖"
+  },
+
+  ko: {
+    popup: "💌 안녕 😚",
+    title: "🐰 Elene – 핑크를 사랑해요 💗",
+    name: "🌸 (Elene) 🌸",
+    content: `
+      <p>안녕하세요 💕! 저는 <b>Elene 🐰</b>.</p>
+      <p>핑크색을 좋아해요 💗.</p>
+      <p>👜 쇼핑과 여행을 좋아해요 ✈️.</p>
+      <p>저는 <b>독일</b>을 정말 좋아해요 – 풍부한 문화와 아름다운 건축, 멋진 성들이 있기 때문이에요 💕.</p>
+      <p>🎵 저는 <b>음악을 정말 좋아해요</b> – 음악은 저를 편안하게 해줘요 💖.</p>
+    `,
+    btn: "비밀을 알고 싶나요?",
+    secret: "💞 이건 비밀이에요 💖"
+  },
+
+  de: {
+    popup: "💌 Hallo 😚",
+    title: "🐰 Elene – Das Mädchen, das Rosa liebt 💗",
+    name: "🌸 (Elene) 🌸",
+    content: `
+      <p>Hallo 💕! Ich bin <b>Elene 🐰</b>.</p>
+      <p>Ich liebe die Farbe Rosa 💗.</p>
+      <p>👜 Ich mag <b>Shopping</b> und <b>Reisen</b> ✈️.</p>
+      <p> Ich liebe <b>Deutschland</b>, weil es eine reiche Kultur, wunderschöne Architektur und märchenhafte Schlösser hat 💕.</p>
+      <p>🎵 Ich <b>liebe Musik sehr</b> – Musik hilft mir zu entspannen und das Leben intensiver zu fühlen 💖.</p>
+    `,
+    btn: "Willst du mein Geheimnis wissen?",
+    secret: "💞 Das ist mein Geheimnis 💖"
+  }
+};
+
+let currentLang = 'vi';
+
+function changeLang(lang) {
+  currentLang = lang;
+  const d = data[lang];
+  document.getElementById("title").innerHTML = d.title;
+  document.getElementById("name").innerHTML = d.name;
+  document.getElementById("content").innerHTML = d.content;
+  document.getElementById("btnText").innerText = d.btn;
+  document.getElementById("secret").innerText = "";
+  document.getElementById("secret").style.display = "none";
+  showPopup(d.popup);
+}
+
+function showPopup(text) {
+  const popup = document.getElementById('popup');
+  popup.innerHTML = text;
+  popup.style.opacity = '1';
+  setTimeout(() => popup.style.opacity = '0', 4000);
+}
+
+function showSecret() {
+  const secretDiv = document.getElementById("secret");
+  const d = data[currentLang];
+  secretDiv.innerText = d.secret;
+  secretDiv.style.display = "block";
+}
+
+changeLang('vi');
+function changeLang(lang) {
+  currentLang = lang;
+  const d = data[lang];
+  document.getElementById("title").innerHTML = d.title;
+  document.getElementById("name").innerHTML = d.name;
+  document.getElementById("content").innerHTML = d.content;
+  document.getElementById("btnText").innerText = d.btn;
+  document.getElementById("secret").innerText = "";
+  document.getElementById("secret").style.display = "none";
+  showPopup(d.popup);
+}
+
+function showPopup(text) {
+  const popup = document.getElementById('popup');
+  popup.innerHTML = text;
+  popup.style.opacity = '1';
+  setTimeout(() => popup.style.opacity = '0', 4000);
+}
+
+function showSecret() {
+  const secretDiv = document.getElementById("secret");
+  const d = data[currentLang];
+  secretDiv.innerText = d.secret;
+  secretDiv.style.display = "block";
+}
+
+changeLang('vi');
+</script>
+
+</body>
+</html>
